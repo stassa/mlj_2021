@@ -1,0 +1,9 @@
+learner <- 'Louise'
+target <- 'ability/2'
+metric <- 'Time'
+louise.eval.mean <- c(36.15625)
+louise.eval.sd <- c(2.6516504294495533)
+louise.sampling.rates <- c(1)
+learner.eval.mean <- louise.eval.mean
+learner.eval.sd <- louise.eval.sd
+learner.sampling.rates <- louise.sampling.rates
