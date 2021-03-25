@@ -133,14 +133,14 @@ background_knowledge(move/2, [% Move primitives
 			  ]).
 
 %metarules(move/2,[higher_order(3,4)]).
-metarules(move/2, [meta_dyadic, meta_monadic]).
+%metarules(move/2, [meta_dyadic, meta_monadic]).
 metarules_NOT_THIS_ONE(move/2, [meta_dyadic
 		  ,meta_tri_chain_1
 		  ,meta_tri_chain_2
 		  ,meta_tri_chain_3
 		  ]).
 
-metarules_(move/2,[chain
+metarules(move/2,[chain
 		 ,tri_chain_1
 		 ,tri_chain_2
 		 ,tri_chain_3

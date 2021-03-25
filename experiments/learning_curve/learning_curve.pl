@@ -1,4 +1,5 @@
 :-module(learning_curve, [learning_curve/6
+			 ,learning_curve/7
 			 ,float_interval/4
 			 ]).
 

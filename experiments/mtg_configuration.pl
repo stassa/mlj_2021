@@ -104,8 +104,8 @@ identity metarule 'P(x,y):- Q(x,y)'.
 inverse metarule 'P(x,y):- Q(y,x)'.
 chain metarule 'P(x,y):- Q(x,z), R(z,y)'.
 tailrec metarule 'P(x,y):- Q(x,z), P(z,y)'.
-precon metarule 'P(x,y):- Q(x), R(x,y)'.
-postcon metarule 'P(x,y):- Q(x,y), R(y)'.
+%precon metarule 'P(x,y):- Q(x), R(x,y)'.
+%postcon metarule 'P(x,y):- Q(x,y), R(y)'.
 switch metarule 'P(x,y):- Q(x,z), R(y,z)'.
 swap metarule 'P(x,y):- Q(z,x), R(z,y)'.
 % Metarules with abductible first-order existentially quantified
@@ -113,18 +113,18 @@ swap metarule 'P(x,y):- Q(z,x), R(z,y)'.
 chain_abduce_x metarule 'P(X,y):- Q(X,z), R(z,y)'.
 chain_abduce_y metarule 'P(x,Y):- Q(x,z), R(z,Y)'.
 chain_abduce_z metarule 'P(x,y):- Q(x,Z), R(Z,y)'.
-projection_21_abduce metarule 'P(X,X):- Q(X)'.
-projection_12_abduce metarule 'P(X):- Q(X,X)'.
-precon_abduce metarule 'P(X,y):- Q(X), R(X,y)'.
-postcon_abduce metarule 'P(x,Y):- Q(x,Y), R(Y)'.
+%projection_21_abduce metarule 'P(X,X):- Q(X)'.
+%projection_12_abduce metarule 'P(X):- Q(X,X)'.
+%precon_abduce metarule 'P(X,y):- Q(X), R(X,y)'.
+%postcon_abduce metarule 'P(x,Y):- Q(x,Y), R(Y)'.
 % Meta-metarules. Use only with meta_learning.pl
 % WARNING Comment these out when learing with [all] metarules!
-meta_dyadic metarule 'P(x,y):- Q(z,u), R(v,w)'.
-meta_monadic metarule 'P(x,y):- Q(z,u)'.
-meta_precon metarule 'P(x,y):- Q(z),R(u,v)'.
-meta_postcon metarule 'P(x,y):- Q(z,u),R(v)'.
-meta_projection_21 metarule 'P(x,y):- Q(z)'.
-meta_projection_12 metarule 'P(x):- Q(y,z)'.
+%meta_dyadic metarule 'P(x,y):- Q(z,u), R(v,w)'.
+%meta_monadic metarule 'P(x,y):- Q(z,u)'.
+%meta_precon metarule 'P(x,y):- Q(z),R(u,v)'.
+%meta_postcon metarule 'P(x,y):- Q(z,u),R(v)'.
+%meta_projection_21 metarule 'P(x,y):- Q(z)'.
+%meta_projection_12 metarule 'P(x):- Q(y,z)'.
 
 :- dynamic metarule_constraints/2.
 :- multifile metarule_constraints/2.

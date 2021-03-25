@@ -152,7 +152,7 @@ learning_curve_time_limit(300).
 % Dataset-specific configuration options
 % ================================================================================
 
-configuration:learning_predicate(learn_meta/1).
+%configuration:learning_predicate(learn_meta/1).
 
 % Triadic metarules - allow higher-order moves to be used.
 configuration:tri_chain_1 metarule 'P(x,y):- Q(M,x,z), R(z,y)'.

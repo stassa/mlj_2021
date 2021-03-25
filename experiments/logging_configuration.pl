@@ -5,23 +5,23 @@
  * and 'reduction'.
 */
 :-nodebug(_). % Clear all debug topics.
-:-debug(learn). % Debug learning steps.
+%:-debug(learn). % Debug learning steps.
 %:-debug(metasubstitution). % Debug metasubstitutions.
 %:-debug(top_program). % Debug Top program construction.
 %:-debug(reduction). % Debug Top program reduction.
 %:-debug(dynamic). % Debug dynamic learning.
 %:-debug(predicate_invention). % Debug predicate invention.
-:-debug(learn_metarules). % Debug metarule learning
-:-debug(learned_metarules). % Debug new metarules
+%:-debug(learn_metarules). % Debug metarule learning
+%:-debug(learned_metarules). % Debug new metarules
 %:-debug(metarule_grounding). % Debug metarule template specialisation
 %:-debug(examples_invention). % Debug examples invention.
 %:-debug(remove_null). % Debug examples invention.
-:-debug(evaluation).
+%:-debug(evaluation).
 % Learning curve logging
-:-debug(progress).
+%:-debug(progress).
 %:-debug(learning_curve_full).
-:-debug(learning_curve_setup).
-:-debug(learning_curve).
+%:-debug(learning_curve_setup).
+%:-debug(learning_curve).
 
 
 % Colorise Swi debug messages to make them more readable in

@@ -294,8 +294,8 @@ init_output_dir:-
 %	@tbd
 %
 write_dataset:-
-	generator_configuration:experiment_world(Wrld)
-	,generator_configuration:exported_moves(Wrld,Es)
+	configuration:experiment_world(Wrld)
+	,configuration:exported_moves(Wrld,Es)
 	,init_output_dir
 	,dataset_file_name(Bn,Fn)
 	,generate_problems(Ps)
@@ -317,9 +317,9 @@ write_dataset:-
 %	Generate a Path for a grid world navigation dataset.
 %
 dataset_file_name(Bn,P):-
-	generator_configuration:output_directory(O)
-	,generator_configuration:experiment_world(Wr)
-	,generator_configuration:world_dimensions(W,H)
+	configuration:output_directory(O)
+	,configuration:experiment_world(Wr)
+	,configuration:world_dimensions(W,H)
 	% Gets the absolute name of this module file
 	,module_property(move_generator, file(M))
 	,file_directory_name(M,D)
@@ -349,8 +349,8 @@ list_dataset:-
 %	Print a dataset's properties to a Stream.
 %
 list_dataset(S,Ps,Ms,Ls):-
-	experiment_world(World)
-	,world_dimensions(W,H)
+	configuration:experiment_world(World)
+	,configuration:world_dimensions(W,H)
 	,maplist(length,[Ps,Ms,Ls],[L,M,N])
 	,format(S,'% World: ~w~n', [World])
 	,format(S,'% Dimensions: ~w x ~w~n', [W,H])
@@ -428,9 +428,9 @@ generate_locations(Ms,Ls):-
 %	already called in generate_problems/1.
 %
 generate_moves(Ms):-
-	generator_configuration:experiment_world(Wr)
-	,generator_configuration:exported_moves(Wr,MS)
-	,world_dimensions(W,H)
+	configuration:experiment_world(Wr)
+	,configuration:exported_moves(Wr,MS)
+	,configuration:world_dimensions(W,H)
 	,setof(M
 	      ,Wr^W^H^Ss^Gs^Mv^MS^(problem(Wr,nondeterministic,W,H,Ss,Gs)
 				  ,member(Mv,MS)
@@ -497,8 +497,8 @@ move(put_down/2,Ss,M):-
 %	tasks in the given world are generated on backtracking.
 %
 generate_problems(Ps):-
-	experiment_world(Wr)
-	,world_dimensions(W,H)
+	configuration:experiment_world(Wr)
+	,configuration:world_dimensions(W,H)
 	,findall(move(Ss,Gs)
 		,problem(Wr,nondeterministic,W,H,Ss,Gs)
 		,Ps).

@@ -3,9 +3,17 @@
                           ,run_coloured_graph/1
                           ]).
 
+% Stops warnings that options set in the original configuration of an
+% experiment file have been clobbered by the experiment configuration.
+:- set_prolog_flag(warn_override_implicit_import, false).
+
 %:-use_module('../louise/data/scripts/learning_curve/learning_curve.pl').
-:-use_module('learning_curve/learning_curve.pl').
+:-use_module(learning_curve/learning_curve).
+:-use_module(metarule_reduction/metarule_reduction).
 :-[logging_configuration].
+
+%:-edit(metarule_reduction/metarule_reduction).
+:-edit('run_experiments.pl').
 
 %!      load_config(+File) is det.
 %
@@ -25,14 +33,10 @@ run_mtg_fragment(M):-
         ,load_config('../experiments/mtg_configuration.pl')
         ,T = ability/2
         ,debug_problem_statistics(learning_curve,T)
-        %,K = 100
-        %,float_interval(1,9,1,Ss)
-        % Uncomment the following two lines to test experiment setup.
-        % Comment the two lines above, first!
-        ,K = 2 %5
-        ,interval(1,1,1,Ss)
+        ,K = 2 %5 %100
+        ,S = 0.3
         ,debug(progress,'~w: Starting on mtg_fragment dataset',[L])
-        ,learning_curve(T,M,K,Ss,_Ms,_SDs)
+        ,metarule_variation(T,M,K,S,_Ms,_SDs)
         ,debug(progress,'~w: Finished with mtg_fragment dataset',[L]).
 
 
@@ -50,14 +54,10 @@ run_robots(M):-
         ,user:use_module(src(experiment_file))
         ,T = move/2
         ,debug_problem_statistics(learning_curve,T)
-        %,K = 10
-        %,float_interval(1,9,1,Ss)
-        % Uncomment the following two lines to test experiment setup.
-        % Comment the two lines above, first!
         ,K = 2 %5
-        ,interval(1,1,1,Ss)
+        ,S = 0.5
         ,debug(progress,'~w: Starting on robots dataset',[L])
-        ,learning_curve(T,M,K,Ss,_Ms,_SDs)
+        ,metarule_variation(T,M,K,S,_Ms,_SDs)
         ,debug(progress,'~w: Finished with robots dataset',[L]).
 
 
@@ -74,14 +74,10 @@ run_coloured_graph(M):-
         %,graph_generator:write_dataset
         ,coloured_graph_target(T)
         ,debug_problem_statistics(learning_curve,T)
-        %,K = 10
-        %,float_interval(1,9,1,Ss)
-        % Uncomment the following two lines to test experiment setup.
-        % Comment the two lines above, first!
-        ,K = 2 %5
-        ,interval(1,1,1,Ss)
+        ,K = 2 % 100
+        ,S = 0.5
         ,debug(progress,'~w: Starting on coloured_graph dataset',[L])
-        ,learning_curve(T,M,K,Ss,_Ms,_SDs)
+        ,metarule_variation(T,M,K,S,_Ms,_SDs)
         ,debug(progress,'~w: Finished with coloured_graph dataset',[L]).
 
 
@@ -107,9 +103,14 @@ coloured_graph_target(M/A):-
 %
 debug_problem_statistics(S,T):-
 	experiment_data(T,Pos,Neg,BK,MS)
-	,maplist(length,[Pos,Neg,BK,MS],[I,J,K,N])
+%	,maplist(length,[Pos,Neg,BK,MS],[I,J,K,N])
+        ,length(Pos,I)
+        ,length(Neg,J)
+        ,length(BK,K)
+        ,length(MS,N)
         ,debug(S,'MIL problem statistics', [])
 	,debug(S,'Positive examples:    ~w', [I])
 	,debug(S,'Negative examples:    ~w', [J])
 	,debug(S,'Background knowledge: ~w ~w', [K,BK])
 	,debug(S,'Metarules:            ~w ~w~n', [N,MS]).
+
