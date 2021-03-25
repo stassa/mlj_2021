@@ -33,6 +33,8 @@
                             ,output_to/1
                             ,symbol/3
                             ,exported_moves/2
+                             % Experiment specific
+                            ,metarules/1
                             ]).
 
 % Must be loaded before experiment file to allow experiment files to
@@ -180,6 +182,23 @@ exported_moves(simple_world,[move_right/2,move_left/2,move_up/2,move_down/2
 exported_moves(obstacles_world,[move_right/2,move_left/2,move_up/2,move_down/2
                                ,pick_up/2,put_down/2]).
 
+% ================================================================================
+% Experiment-specific configuration options
+% ================================================================================
+
+% Overrides metarules/2 in datasets/robots/robots.pl
+metarules([abduce
+          ,unit
+          ,identity
+          ,inverse
+          ,chain
+          ,tailrec
+          ,switch
+          ,swap
+          ,chain_abduce_x
+          ,chain_abduce_y
+          ,chain_abduce_y
+          ]).
 
 % This line ensures the experiment file set in the configuration option
 % experiment_file/2 is always updated when the configuration module is

@@ -90,17 +90,6 @@ results in the console. You've been warned!
 % MIL problem
 % ========================================
 
-%configuration:learning_predicate(learn_meta/1).
-
-% Triadic metarules - allow higher-order moves to be used.
-/*configuration:tri_chain_1 metarule 'P(x,y):- Q(M,x,z), R(z,y)'.
-configuration:tri_chain_2 metarule 'P(x,y):- Q(x,z), R(M,z,y)'.
-configuration:tri_chain_3 metarule 'P(x,y):- Q(M,x,z), R(N,z,y)'.
-
-configuration:meta_tri_chain_1 metarule 'P(x,y):- Q(M,z,u), R(v,w)'.
-configuration:meta_tri_chain_2 metarule 'P(x,y):- Q(z,u), R(M,v,w)'.
-configuration:meta_tri_chain_3 metarule 'P(x,y):- Q(M,z,u), R(N,v,w)'.
-*/
 background_knowledge(move/2, [% Move primitives
 			      move_right/2
 			     ,move_left/2
@@ -131,14 +120,6 @@ background_knowledge(move/2, [% Move primitives
 			     ,move_down_then_right/2
 			     ,move_down_then_left/2
 			  ]).
-
-%metarules(move/2,[higher_order(3,4)]).
-%metarules(move/2, [meta_dyadic, meta_monadic]).
-metarules_NOT_THIS_ONE(move/2, [meta_dyadic
-		  ,meta_tri_chain_1
-		  ,meta_tri_chain_2
-		  ,meta_tri_chain_3
-		  ]).
 
 metarules(move/2,[chain
 		 ,tri_chain_1

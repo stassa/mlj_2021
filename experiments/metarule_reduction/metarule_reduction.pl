@@ -7,7 +7,9 @@ metarule_variation(T,M,K,S,Hs,Ms,SDs):-
         learning_curve:start_logging(T)
         ,configuration:learning_curve_time_limit(L)
         ,learning_curve:log_experiment_setup(T,L,M,K,[S])
-        ,experiment_data(T,Pos,Neg,BK,MS)
+        ,experiment_data(T,Pos,Neg,BK,_)
+        % Overrides metarules defined in experiment file
+        ,configuration:metarules(MS)
         ,metarule_variations(T,L,[Pos,Neg,BK,MS],Hs,M,K,S,Rs)
         ,Rs \= []
         ,pairs_averages(Rs,Ms)

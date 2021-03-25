@@ -162,8 +162,18 @@ background_knowledge([ancestor/2
                      %,blue/1
                      %,red/1
                      ]).
-%metarules([meta_dyadic,meta_monadic]).
-metarules([identity,inverse,switch,swap]).
+metarules([abduce
+          ,unit
+          ,identity
+          ,inverse
+          ,chain
+          ,tailrec
+          ,switch
+          ,swap
+          ,chain_abduce_x
+          ,chain_abduce_y
+          ,chain_abduce_y
+          ]).
 mislabelling_probability(0.2).
 mislabelling_type(no_noise).
 %mislabelling_type(ambiguities).

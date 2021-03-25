@@ -178,13 +178,7 @@ Derived primarily from examples on published cards.
 
 */
 
-%:-use_module(configuration).
-%configuration:meta_dyadic_2 metarule 'P(x,y):- Q(z,u), R(u,w)'.
-
-metarules(ability/2,[all]).
-%metarules(ability/2,[chain]).
-%metarules(ability/2,[meta_dyadic]).
-%metarules(ability/2,[higher_order(3,3)]).
+metarules(ability/2,[chain]).
 
 positive_example(ability/2,ability(E, [])):-
 	phrase(ability, E).
