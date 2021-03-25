@@ -1,6 +1,6 @@
-:-module(run_experiments, [run_mtg_fragment/3
-                          ,run_robots/3
-                          ,run_coloured_graph/3
+:-module(run_experiments, [run_mtg_fragment/4
+                          ,run_robots/4
+                          ,run_coloured_graph/4
                           ]).
 
 % Stops warnings that options set in the original configuration of an
@@ -23,28 +23,35 @@ load_config(F):-
                       ,redefine_module(true)
                       ]).
 
-%!      run_mtg_fragment(+Metric,+Steps,+Samples) is det.
+%!      run_mtg_fragment(+Metric,+Steps,+Samples,+Higher_Order) is det.
 %
 %       Run a learning rate experiment on the mtg_fragment.pl dataset.
 %
-run_mtg_fragment(M,K,S):-
+%       Metric is an evaluation metric as defined in evaluation.pl (but
+%       usually one of "time" or "acc" for accuracy). Steps is the
+%       number of steps to train with each sub-set of the user-defined
+%       metarules for this MIL problem. Samples is the sampling rate for
+%       the training partition in each experiment step. Higher_Order is
+%       a list of metarule identifiers of higher-order metarules.
+%
+run_mtg_fragment(M,K,S,Hs):-
         configuration:learner(L)
         ,load_config('../experiments/mtg_configuration.pl')
         ,T = ability/2
         ,debug_problem_statistics(learning_curve,T)
         ,debug(progress,'~w: Starting on mtg_fragment dataset',[L])
-        ,metarule_variation(T,M,K,S,_Ms,_SDs)
+        ,metarule_variation(T,M,K,S,Hs,_Ms,_SDs)
         ,debug(progress,'~w: Finished with mtg_fragment dataset',[L]).
 
 
-%!      run_robots(+Metric,+Steps,+Samples) is det.
+%!      run_robots(+Metric,+Steps,+Samples,+Higher_Order) is det.
 %
 %       Run a learning rate experiment on the robots.pl dataset.
 %
 %       Note that the MIL problem in robots.pl is described as "grid
 %       world navigation" in the paper.
 %
-run_robots(M,K,S):-
+run_robots(M,K,S,Hs):-
         configuration:learner(L)
         ,load_config('../experiments/robots_configuration.pl')
         ,moves_generator:write_dataset
@@ -52,25 +59,25 @@ run_robots(M,K,S):-
         ,T = move/2
         ,debug_problem_statistics(learning_curve,T)
         ,debug(progress,'~w: Starting on robots dataset',[L])
-        ,metarule_variation(T,M,K,S,_Ms,_SDs)
+        ,metarule_variation(T,M,K,S,Hs,_Ms,_SDs)
         ,debug(progress,'~w: Finished with robots dataset',[L]).
 
 
-%!      run_coloured_graph(+Metric,+Steps,+Samples) is det.
+%!      run_coloured_graph(+Metric,+Steps,+Samples,+Higher_Order) is det.
 %
 %       Run a learning rate experiment on the coloured_graph.pl dataset.
 %
 %       Note that the MIL problem in coloured_graph.pl is described as "grid
 %       world navigation" in the paper.
 %
-run_coloured_graph(M,K,S):-
+run_coloured_graph(M,K,S,Hs):-
         configuration:learner(L)
         ,load_config('../experiments/coloured_graph_configuration.pl')
         %,graph_generator:write_dataset
         ,coloured_graph_target(T)
         ,debug_problem_statistics(learning_curve,T)
         ,debug(progress,'~w: Starting on coloured_graph dataset',[L])
-        ,metarule_variation(T,M,K,S,_Ms,_SDs)
+        ,metarule_variation(T,M,K,S,Hs,_Ms,_SDs)
         ,debug(progress,'~w: Finished with coloured_graph dataset',[L]).
 
 
