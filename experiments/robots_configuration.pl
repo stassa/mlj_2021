@@ -142,8 +142,8 @@ meta_projection_12 metarule 'P(x):- Q(y,z)'.
 % Learning curve script configuration options
 % ================================================================================
 
-%copy_plotting_scripts(false).
-copy_plotting_scripts(scripts(learning_curve/plotting)).
+copy_plotting_scripts(false).
+%copy_plotting_scripts(scripts(learning_curve/plotting)).
 logging_directory('../experiments/output/robots/').
 plotting_directory('../experiments/output/robots/').
 r_data_file('learning_curve_data.r').
