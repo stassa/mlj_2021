@@ -8,13 +8,14 @@
 :-use_module(src(mil_problem)).
 :-use_module(lib(evaluation/evaluation)).
 
+
 metarule_variation(T,M,K,S,Hs,Ms,SDs):-
         learning_curve:start_logging(T)
-        ,configuration:learning_curve_time_limit(L)
-        ,learning_curve:log_experiment_setup(T,L,M,K,[S])
-        ,experiment_data(T,Pos,Neg,BK,_)
         % Overrides metarules defined in experiment file
         ,configuration:metarules(MS)
+        ,configuration:learning_curve_time_limit(L)
+        ,experiment_data(T,Pos,Neg,BK,_)
+        ,log_experiment_setup(T,L,M,K,[S],Pos,Neg,BK,MS,Hs)
         ,metarule_variations(T,L,[Pos,Neg,BK,MS],Hs,M,K,S,Rs)
         ,Rs \= []
         ,pairs_averages(Rs,Ms)
@@ -103,3 +104,34 @@ combined(MS_1,MS_2,MS):-
                  )
                 ,MS)
         ,debug_quantified_metarules(progress,'Combined metarules:',MS).
+
+
+%!	log_experiment_setup(+Target,+Limit,+Metric,+Steps,+Samples) is
+%!	det.
+%
+%	Log configuration options and experiment parameters.
+%
+log_experiment_setup(T,L,M,K,Ss,Pos,Neg,BK,MS,Hs):-
+	learning_curve:metric_name(M,N)
+%	,maplist(length,[Pos,Neg,BK,MS],[I,J,K,N])
+        ,length(Pos,L1)
+        ,length(Neg,L2)
+        ,length(BK,L3)
+        ,length(MS,L4)
+        ,length(Hs,L5)
+        ,debug(learning_curve,'Experiment parameters:',[])
+	,debug(learning_curve,'Target:           ~w',[T])
+	,debug(learning_curve,'Metric:           ~w',[N])
+	,debug(learning_curve,'Steps:            ~w',[K])
+	,debug(learning_curve,'Samples:          ~w',[Ss])
+	,debug(learning_curve,'Time limit (sec): ~w',[L])
+	,debug(learning_curve,'',[])
+        ,debug(learning_curve,'MIL problem statistics:',[])
+        ,debug(learning_curve,'Positive examples:      ~w', [L1])
+        ,debug(learning_curve,'Negative examples:      ~w', [L2])
+	,debug(learning_curve,'Background knowledge:   ~w ~w', [L3,BK])
+	,debug(learning_curve,'Metarules:              ~w ~w',[L4,MS])
+        ,debug(learning_curve,'Higher order metarules: ~w ~w',[L5,Hs])
+	,debug(learning_curve,'',[])
+	,debug(learning_curve,'Configuration options:',[])
+	,print_config(debug,learning_curve,all).

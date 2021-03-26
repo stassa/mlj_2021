@@ -23,14 +23,14 @@ $experiment_module="run_experiments.pl"
 
 # Run experiments complementing user-defined with metarules learned by matrix
 # metarule specialisation:
-& 'C:\Program Files\swipl\bin\swipl.exe' -s $experiment_module -g 'run_mtg_fragment(acc,2,1,[meta_monadic,meta_dyadic])' -t halt
+& 'C:\Program Files\swipl\bin\swipl.exe' -s $experiment_module -g 'run_mtg_fragment(acc,2,1,[meta_dyadic])' -t halt
 & 'C:\Program Files\swipl\bin\swipl.exe' -s $experiment_module -g 'run_robots(acc,2,1,[meta_monadic,meta_dyadic])' -t halt
 & 'C:\Program Files\swipl\bin\swipl.exe' -s $experiment_module -g 'run_coloured_graph(acc,2,1,[meta_monadic,meta_dyadic])' -t halt
 
-# Run experiments complementing user-defined with metarules learned by punch
-# metarule specialisation:
+## Run experiments complementing user-defined with metarules learned by punch
+## metarule specialisation:
+# Note: higher_order(2,3) makes mtg_fragment.pl take a very, Very, VERY long time.
 & 'C:\Program Files\swipl\bin\swipl.exe' -s $experiment_module -g 'run_mtg_fragment(acc,2,1,[higher_order(3,3)])' -t halt
-# higher_order(2,3) makes mtg_fragment.pl take a very, Very, VERY long time.
 & 'C:\Program Files\swipl\bin\swipl.exe' -s $experiment_module -g 'run_robots(acc,2,1,[higher_order(2,3)])' -t halt
 & 'C:\Program Files\swipl\bin\swipl.exe' -s $experiment_module -g 'run_coloured_graph(acc,2,1,[higher_order(2,3)])' -t halt
 

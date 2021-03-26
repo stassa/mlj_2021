@@ -123,7 +123,6 @@ run_mtg_fragment(M,K,S,Hs):-
         % to avoid redefinition permission errors in learning_curve.pl
         ,use_module('../metarule_reduction/metarule_reduction.pl')
         ,T = ability/2
-        ,debug_problem_statistics(learning_curve,T)
         ,debug(progress,'~w: Starting on mtg_fragment dataset',[L])
         ,metarule_reduction:metarule_variation(T,M,K,S,Hs,_Ms,_SDs)
         ,debug(progress,'~w: Finished with mtg_fragment dataset',[L]).
@@ -146,7 +145,6 @@ run_robots(M,K,S,Hs):-
         ,moves_generator:write_dataset
         ,user:use_module(src(experiment_file))
         ,T = move/2
-        ,debug_problem_statistics(learning_curve,T)
         ,debug(progress,'~w: Starting on robots dataset',[L])
         ,metarule_reduction:metarule_variation(T,M,K,S,Hs,_Ms,_SDs)
         ,debug(progress,'~w: Finished with robots dataset',[L]).
@@ -168,7 +166,6 @@ run_coloured_graph(M,K,S,Hs):-
         ,use_module('../metarule_reduction/metarule_reduction.pl')
         %,graph_generator:write_dataset
         ,coloured_graph_target(T)
-        ,debug_problem_statistics(learning_curve,T)
         ,debug(progress,'~w: Starting on coloured_graph dataset',[L])
         ,metarule_reduction:metarule_variation(T,M,K,S,Hs,_Ms,_SDs)
         ,debug(progress,'~w: Finished with coloured_graph dataset',[L]).
@@ -182,28 +179,3 @@ coloured_graph_target(M/A):-
         configuration:mislabelling_type(T)
         ,configuration:target_prefix_arity(P,A)
         ,atomic_list_concat([P,T],'_',M).
-
-
-
-%!	debug_problem_statistics(+Subject,+Target) is det.
-%
-%	Log statistics of the MIL problem for Target.
-%
-%	Currently this only lists the numbers of positive and negative
-%	examples, background definitions and metarules in the initial
-%	MIL problem for Target (i.e. before any automatic modifications
-%	such as metarule extension).
-%
-debug_problem_statistics(S,T):-
-	experiment_data(T,Pos,Neg,BK,MS)
-%	,maplist(length,[Pos,Neg,BK,MS],[I,J,K,N])
-        ,length(Pos,I)
-        ,length(Neg,J)
-        ,length(BK,K)
-        ,length(MS,N)
-        ,debug(S,'MIL problem statistics', [])
-	,debug(S,'Positive examples:    ~w', [I])
-	,debug(S,'Negative examples:    ~w', [J])
-	,debug(S,'Background knowledge: ~w ~w', [K,BK])
-	,debug(S,'Metarules:            ~w ~w~n', [N,MS]).
-
