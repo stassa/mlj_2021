@@ -5,6 +5,7 @@
 :-use_module(src(louise)).
 :-use_module(src(meta_learning)).
 :-use_module(src(auxiliaries)).
+:-use_module(src(mil_problem)).
 :-use_module(lib(evaluation/evaluation)).
 
 metarule_variation(T,M,K,S,Hs,Ms,SDs):-
@@ -46,7 +47,7 @@ metarule_subset_evaluations(_T,_L,[_Pos,_Neg,_BK,[]],_Hs,_M,_S,Acc,Vs):-
         ,!.
 metarule_subset_evaluations(T,L,[Pos,Neg,BK,MS],Hs,M,S,Acc,Bind):-
         !
-        ,debug(progress,'Metarules: ~w',[MS])
+        ,debug(progress,'User-defined metarules: ~w',[MS])
         ,learn_meta_reduction(T,L,[Pos,Neg,BK,MS],Hs,M,S,Ps,V)
         ,debug(progress,'Measured ~w: ~w',[M,V])
         ,debug(metarule_reduction_full,'Measured ~w: ~w sec',[M,V])
@@ -70,6 +71,7 @@ learn_meta_reduction(_T,L,[Pos,Neg,BK,MS],Hs,time,S,Ps,D):-
         ,evaluation:train_test_splits(S,Neg,Neg_Train,_Neg_Test)
 
         % The output of this will need to be combined with MS below.
+        ,debug(progress,'Learning new metarules: ~w',[MS])
         ,learn_metarules(Pos,Neg,BK,Hs,MS_1)
         ,expanded_metarules(MS,MS_e)
         ,combined(MS_1,MS_e,MS_)
@@ -78,7 +80,8 @@ learn_meta_reduction(T,L,[Pos,Neg,BK,MS],[],M,S,Ps,V):-
         !
         ,once(timed_train_and_test(T,S,L,[Pos,Neg,BK,MS],Ps,M,V)).
 learn_meta_reduction(T,L,[Pos,Neg,BK,MS],Hs,M,S,Ps,V):-
-        learn_metarules(Pos,Neg,BK,Hs,MS_1)
+        debug(progress,'Learning new metarules: ~w',[MS])
+        ,learn_metarules(Pos,Neg,BK,Hs,MS_1)
         ,expanded_metarules(MS,MS_e)
         ,combined(MS_1,MS_e,MS_)
         ,once(timed_train_and_test(T,S,L,[Pos,Neg,BK,MS_],Ps,M,V)).
