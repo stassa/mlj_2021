@@ -79,6 +79,7 @@ reduce_learned_metarules(false).
 
 example_clauses(call).
 generalised_examples(fully).
+% Path relative to louise/load_project.pl or louise/load_headless.pl.
 experiment_file('../experiments/datasets/coloured_graph/coloured_graph.pl',coloured_graph).
 learner(louise).
 :-dynamic learning_predicate/1.

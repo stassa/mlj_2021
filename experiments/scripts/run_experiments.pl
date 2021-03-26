@@ -7,8 +7,8 @@
 % experiment file have been clobbered by the experiment configuration.
 :- set_prolog_flag(warn_override_implicit_import, false).
 
-:-use_module(metarule_reduction/metarule_reduction).
-:-[configuration/logging_configuration].
+:-use_module('../metarule_reduction/metarule_reduction.pl').
+:-['../configuration/logging_configuration.pl'].
 
 %:-edit(metarule_reduction/metarule_reduction).
 :-edit('run_experiments.pl').
@@ -35,6 +35,7 @@ load_config(F):-
 %
 run_mtg_fragment(M,K,S,Hs):-
         configuration:learner(L)
+        % Path relative to louise/load_project.pl or louise/load_headless.pl.
         ,load_config('../experiments/configuration/mtg_configuration.pl')
         ,T = ability/2
         ,debug_problem_statistics(learning_curve,T)
@@ -52,6 +53,7 @@ run_mtg_fragment(M,K,S,Hs):-
 %
 run_robots(M,K,S,Hs):-
         configuration:learner(L)
+        % Path relative to louise/load_project.pl or louise/load_headless.pl.
         ,load_config('../experiments/configuration/robots_configuration.pl')
         ,moves_generator:write_dataset
         ,user:use_module(src(experiment_file))
@@ -71,6 +73,7 @@ run_robots(M,K,S,Hs):-
 %
 run_coloured_graph(M,K,S,Hs):-
         configuration:learner(L)
+        % Path relative to louise/load_project.pl or louise/load_headless.pl.
         ,load_config('../experiments/configuration/coloured_graph_configuration.pl')
         %,graph_generator:write_dataset
         ,coloured_graph_target(T)
