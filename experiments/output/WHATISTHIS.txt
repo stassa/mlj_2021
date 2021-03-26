@@ -1,0 +1,7 @@
+Output directory with sub-directories for different experiments.
+
+Avoid keeping experiment output in this file because they may well be
+clobbered when running an experiment with the same parameters.
+
+Git ignores the contents of this directory other than this file and the
+.gitignore file.

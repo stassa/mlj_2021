@@ -1,4 +1,5 @@
 # Place output files in this directory.
-# Ignore all but this file.
+# Ignore all but these two files.
 *
 !.gitignore
+!WHATISTHIS.txt

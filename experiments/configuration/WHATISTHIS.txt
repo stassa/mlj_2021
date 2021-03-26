@@ -1,0 +1,23 @@
+Configuration files for the various metarule reduction experiments.
+
+- robots_configuration.pl
+  > Configuration file to go with datasets/robots/robots.pl experiment file.
+    Overrides configuration options and metarules set in that experiment file
+    and the main Louise configuration.
+    
+- mtg_configuration.pl
+  > Configuration file to go with datasets/mtg_fragment/mtg_fragment.pl
+    experiment file. Overrides configuration options and metarules set in that
+    experiment file and the main Louise configuration.
+
+- logging_configuration.pl
+  > Configuration options for logging in Louise and experiment scripts. Turn
+    logging on or off or select terminal output colours for different debug
+    subjects. Logging output directories are determined in experiment-specific
+    configuration files, e.g. robots_configuration.pl for the robots
+    experiment etc.
+
+- coloured_graph_configuration.pl
+  > Configuration file to go with datasets/coloured_graph/coloured_graph.pl
+    experiment file. Overrides configuration options and metarules set in that
+    experiment file and the main Louise configuration.

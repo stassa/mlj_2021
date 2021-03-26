@@ -1,0 +1,13 @@
+Directories holding experimental datasets as Louise experiment files and
+assorted generator and configuration files. Configuration and metarules
+defined in these directories are overriden by the experiment configuration
+options in experiments/configuration.
+
+- coloured_graph/
+  > Coloured graph experiment file and generator.
+
+- mtg_fragment/
+  > M:tG Fragment experiment file.
+
+- robots/
+  > Grid World Navigation experiment file and generator.

@@ -1,0 +1,19 @@
+Experiment code modules.
+
+- learning_curve.pl 
+  > Modification of the louise/data/scripts/learning_curve/learning_curve.pl
+    script to allow the configuration to be obtained from a global
+    configuration module rather than the learning_curve_configuration.pl
+    module. Later versions of Louise may change to make this default so that
+    duplication is avoided.
+
+- metarule_reduction.pl
+  > Module with Prolog programs that implement a metarule reduction
+    experiment: metarules are proressively removed and in one leg of the
+    experiment, replaced with metarules learned by metarule specialisation.
+
+- plotting/
+  > Directory holding R scrips to plot results of metarule reduction
+    experiments. Currently this holds the script used to plot learning curve
+    experiments and should be replaced with a differet plotting script (also
+    moved under scripts/ directory).
