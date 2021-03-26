@@ -1,5 +1,8 @@
 % Print coloured output to terminal if possible.
 :- set_prolog_flag(color_term, true).
+% Seems to be needed to start printing in colour...???!!!
+:-current_prolog_flag(color_term, V)
+  ,ansi_format([fg(cyan)], 'colour_term: ~w~n', [V]).
 
 /* Debug levels
  * Note that some of the debug topics below emit identical messages.
@@ -29,13 +32,11 @@
 
 % Colorise Swi debug messages to make them more readable in
 % dark-coloured terminals (default colouring is too dark).
-%user:message_property(debug(learn), color( [ fg(green) ]) ).
-%user:message_property(debug(learned_metarules), color( [ fg(green) ]) ).
-%user:message_property(debug(evaluation), color( [ fg(green) ]) ).
-%user:message_property(debug(learn), color( [ fg(green) ]) ).
+user:message_property(debug(learn), color( [bold, fg(green) ]) ).
+user:message_property(debug(learned_metarules), color( [fg(green) ]) ).
+user:message_property(debug(evaluation), color( [bold, fg(cyan) ]) ).
 
 user:message_property(debug(learning_curve), color( [ fg(cyan) ]) ).
 user:message_property(debug(learning_curve_setup), color( [ fg(cyan) ]) ).
 user:message_property(debug(run_learning_curve_setup), color( [ fg(cyan) ]) ).
-user:message_property(debug(progress), color( [ fg(bright_yellow) ]) ).
-
+user:message_property(debug(progress), color( [bold, fg(yellow) ]) ).
