@@ -4,7 +4,7 @@
 # will be a bit confusing. 
 
 # Root file of the run_experiments.pl module relative to the project root.
-$experiment_module_root=".\experiments\scripts"
+$experiment_module_root="./experiments/scripts"
 # Name of the Prolog module file that defines experiment running predicates.
 $experiment_module="run_experiments.pl"
 
