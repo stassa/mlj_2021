@@ -1,7 +1,7 @@
 :-module(metarule_reduction, [metarule_variation/7
                              ]).
 
-:-use_module('../learning_curve/learning_curve.pl').
+:-use_module(learning_curve).
 
 metarule_variation(T,M,K,S,Hs,Ms,SDs):-
         learning_curve:start_logging(T)

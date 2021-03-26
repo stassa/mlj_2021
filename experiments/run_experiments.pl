@@ -7,7 +7,6 @@
 % experiment file have been clobbered by the experiment configuration.
 :- set_prolog_flag(warn_override_implicit_import, false).
 
-%:-use_module('../louise/data/scripts/learning_curve/learning_curve.pl').
 :-use_module(metarule_reduction/metarule_reduction).
 :-[configuration/logging_configuration].
 
