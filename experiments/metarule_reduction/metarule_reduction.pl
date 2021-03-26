@@ -2,6 +2,10 @@
                              ]).
 
 :-use_module(learning_curve).
+:-use_module(src(louise)).
+:-use_module(src(meta_learning)).
+:-use_module(src(auxiliaries)).
+:-use_module(lib(evaluation/evaluation)).
 
 metarule_variation(T,M,K,S,Hs,Ms,SDs):-
         learning_curve:start_logging(T)

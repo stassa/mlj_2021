@@ -81,8 +81,8 @@ reduce_learned_metarules(false).
 
 example_clauses(call).
 generalised_examples(fully).
-% Path relative to louise/load_project.pl or louise/load_headless.pl.
-experiment_file('../experiments/datasets/robots/robots.pl',robots).
+% Path relative to this file.
+experiment_file('../datasets/robots/robots.pl',robots).
 learner(louise).
 :-dynamic learning_predicate/1.
 :-multifile learning_predicate/1.
@@ -144,9 +144,9 @@ meta_projection_12 metarule 'P(x):- Q(y,z)'.
 % ================================================================================
 
 copy_plotting_scripts(false).
-%copy_plotting_scripts(scripts(learning_curve/plotting)).
-logging_directory('../experiments/output/robots/').
-plotting_directory('../experiments/output/robots/').
+% Paths relative to this file.
+logging_directory('../output/robots/').
+plotting_directory('../output/robots/').
 r_data_file('learning_curve_data.r').
 learning_curve_time_limit(300).
 

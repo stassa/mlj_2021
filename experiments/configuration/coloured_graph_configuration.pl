@@ -79,8 +79,8 @@ reduce_learned_metarules(false).
 
 example_clauses(call).
 generalised_examples(fully).
-% Path relative to louise/load_project.pl or louise/load_headless.pl.
-experiment_file('../experiments/datasets/coloured_graph/coloured_graph.pl',coloured_graph).
+% Path relative to this file.
+experiment_file('../datasets/coloured_graph/coloured_graph.pl',coloured_graph).
 learner(louise).
 :-dynamic learning_predicate/1.
 :-multifile learning_predicate/1.
@@ -142,9 +142,9 @@ meta_projection_12 metarule 'P(x):- Q(y,z)'.
 % ================================================================================
 
 copy_plotting_scripts(false).
-%copy_plotting_scripts(scripts(learning_curve/plotting)).
-logging_directory('../experiments/output/coloured_graph/').
-plotting_directory('../experiments/output/coloured_graph/').
+% Paths relative to this file.
+logging_directory('../output/coloured_graph/').
+plotting_directory('../output/coloured_graph/').
 r_data_file('learning_curve_data.r').
 learning_curve_time_limit(300).
 
@@ -180,7 +180,8 @@ mislabelling_type(no_noise).
 %mislabelling_type(ambiguities).
 %mislabelling_type(false_positives).
 %mislabelling_type(false_negatives).
-output_root('../experiments/datasets/coloured_graph/output').
+% Path relative to this file.
+output_root('../datasets/coloured_graph/output').
 target_prefix_arity('graph', 2).
 
 
