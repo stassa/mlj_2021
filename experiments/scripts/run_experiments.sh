@@ -4,13 +4,13 @@
 # will be a bit confusing. 
 
 # Root file of the run_experiments.pl module relative to the project root.
-$experiment_module_root="./experiments/scripts"
+experiment_module_root="./experiments/scripts"
 # Name of the Prolog module file that defines experiment running predicates.
-$experiment_module="run_experiments.pl"
+experiment_module="run_experiments.pl"
 
 # Switch to experiment module root.
 # Comment out if you are already running this script from $script_rood.
-. cd $experiment_module_root
+cd $experiment_module_root
 
 # Run experiments varying user-defined metarules:
 swipl -s $experiment_module -g 'run_mtg_fragment(acc,2,1,[])' -t halt &
