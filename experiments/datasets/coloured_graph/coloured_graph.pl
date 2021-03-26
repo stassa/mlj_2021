@@ -36,5 +36,4 @@ dataset_path(Path):-
    ->  write_dataset
    ;   true
    )
-  ,reexport(P)
-  ,writeln('Reexported':P).
+  ,reexport(P).
