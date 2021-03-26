@@ -6,12 +6,16 @@
 /** <module> Run metarule learning experiments.
 
 Running the experiments
-======================
+=======================
 
 This module file must be loaded into Swi Prolog with the current
 directory set to this file's root directory, i.e.:
 
 mlj_2021_experiments/experiments/scripts/
+
+
+Running experiments at the system command line
+----------------------------------------------
 
 To run the experiments on the linux command line or windows powershell
 run a command like the following:
@@ -35,6 +39,45 @@ Remember to change the current directory to the root directory of this
 module file before running the bash or powershell scripts above.
 
 Note that the windows script does not run in cmd.exe.
+
+
+Running experiments in the Swi-Prolog IDE
+-----------------------------------------
+
+To run the experiments in the Swi-Prolog IDE instead of the system
+command line first comment-out the following line in the source below:
+
+==
+:-['../../louise/load_headless'].
+==
+
+Then load Louise by loading its load_project.pl startup file under
+the root louise/ directory.
+
+==
+% In louise/
+?- [load_project].
+==
+
+Then, load this module at the Swi-Prolog command line:
+==
+?- use_module('../experiments/scripts/run_experiments.pl').
+true.
+==
+
+Finally, change Swi-Prolog's current working directory to the root
+directory of the run_experiments.pl module:
+
+==
+?- cd('../experiments/scripts').
+==
+
+Now you can call any of the run_<experiment> predicates defined
+herewith in the Swi-Prolog command line, e.g.:
+
+==
+?- run_coloured_graph(acc,2,1,[]).
+==
 
 */
 
