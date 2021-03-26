@@ -9,7 +9,7 @@
 
 %:-use_module('../louise/data/scripts/learning_curve/learning_curve.pl').
 :-use_module(metarule_reduction/metarule_reduction).
-:-[logging_configuration].
+:-[configuration/logging_configuration].
 
 %:-edit(metarule_reduction/metarule_reduction).
 :-edit('run_experiments.pl').
@@ -36,7 +36,7 @@ load_config(F):-
 %
 run_mtg_fragment(M,K,S,Hs):-
         configuration:learner(L)
-        ,load_config('../experiments/mtg_configuration.pl')
+        ,load_config('../experiments/configuration/mtg_configuration.pl')
         ,T = ability/2
         ,debug_problem_statistics(learning_curve,T)
         ,debug(progress,'~w: Starting on mtg_fragment dataset',[L])
@@ -53,7 +53,7 @@ run_mtg_fragment(M,K,S,Hs):-
 %
 run_robots(M,K,S,Hs):-
         configuration:learner(L)
-        ,load_config('../experiments/robots_configuration.pl')
+        ,load_config('../experiments/configuration/robots_configuration.pl')
         ,moves_generator:write_dataset
         ,user:use_module(src(experiment_file))
         ,T = move/2
@@ -72,7 +72,7 @@ run_robots(M,K,S,Hs):-
 %
 run_coloured_graph(M,K,S,Hs):-
         configuration:learner(L)
-        ,load_config('../experiments/coloured_graph_configuration.pl')
+        ,load_config('../experiments/configuration/coloured_graph_configuration.pl')
         %,graph_generator:write_dataset
         ,coloured_graph_target(T)
         ,debug_problem_statistics(learning_curve,T)
