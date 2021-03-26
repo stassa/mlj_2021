@@ -1,3 +1,6 @@
+% Print coloured output to terminal if possible.
+:- set_prolog_flag(color_term, true).
+
 /* Debug levels
  * Note that some of the debug topics below emit identical messages.
  * In particular, 'learn' debugs learn/5 that calls top program
@@ -26,7 +29,13 @@
 
 % Colorise Swi debug messages to make them more readable in
 % dark-coloured terminals (default colouring is too dark).
-user:message_property(debug(learning_rate), color( [ fg(cyan) ]) ).
-user:message_property(debug(learning_rate_setup), color( [ fg(cyan) ]) ).
-user:message_property(debug(run_learning_rate_setup), color( [ fg(cyan) ]) ).
-user:message_property(debug(progress), color( [ fg(yellow) ]) ).
+%user:message_property(debug(learn), color( [ fg(green) ]) ).
+%user:message_property(debug(learned_metarules), color( [ fg(green) ]) ).
+%user:message_property(debug(evaluation), color( [ fg(green) ]) ).
+%user:message_property(debug(learn), color( [ fg(green) ]) ).
+
+user:message_property(debug(learning_curve), color( [ fg(cyan) ]) ).
+user:message_property(debug(learning_curve_setup), color( [ fg(cyan) ]) ).
+user:message_property(debug(run_learning_curve_setup), color( [ fg(cyan) ]) ).
+user:message_property(debug(progress), color( [ fg(bright_yellow) ]) ).
+
