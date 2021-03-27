@@ -1,4 +1,5 @@
-:-module(log_parser, [write_r_data/1
+:-module(log_parser, [copy_r_plotting_script/2
+                     ,write_r_data/2
                      ,parse_logs_to_r_vectors/2
                      ]).
 
@@ -8,13 +9,22 @@
 
 */
 
+r_plotting_script('plot_experiment_results.r').
+
+
+copy_r_plotting_script(In_Dir,Out_Dir):-
+        r_plotting_script(Fn)
+        ,directory_file_path(In_Dir,Fn,P)
+        ,copy_file(P,Out_Dir).
+
+
 %!      write_r_data(+Directory) is det.
 %
 %       Write an R file holding expeiment data for plotting.
 %
-write_r_data(Dir):-
-        parse_logs_to_r_vectors(Dir,Vs)
-        ,directory_file_path(Dir,'experiment_data.r',P)
+write_r_data(In_Dir, Out_Dir):-
+        parse_logs_to_r_vectors(In_Dir,Vs)
+        ,directory_file_path(Out_Dir,'experiment_data.r',P)
         ,O = open(P,write,S,[alias(experiment_data_file)
                         ,close_on_abort(true)
                         ])
@@ -142,8 +152,8 @@ higher_order(matrix,Hs) -->
         ,integers(_)
         ,blanks
         ,listed(term,Hs).
-means(Ms) --> info_line(`Mean`), string(_M), `:`, blanks, listed(floats,Ms).
-sds(Ms) --> info_line(`Standard deviations:`), blanks, listed(floats,Ms).
+means(Ms) --> info_line(`Mean`), string(_M), `:`, blanks, listed(nums,Ms).
+sds(Ms) --> info_line(`Standard deviations:`), blanks, listed(nums,Ms).
 
 
 info_line(S) --> start_of_line, string(S), blanks.
@@ -161,12 +171,17 @@ integers([N|Ns]) --> integer(N), integers(Ns).
 floats(N) --> float(N).
 floats([N|Ns]) --> float(N), floats(Ns).
 
+nums(N) --> number(N).
+nums([N|Ns]) --> number(N), nums(Ns).
+
 listed(_, []) --> `[]`.
 listed(term,[S|As]) --> `[`, string(S), args(As), `]`, !.
 listed(term,Ts) --> `[`, comma_string(Ts), `]`.
 listed(int, Ns) --> `[`, integers(Ns), `]`.
 listed(float, Ns) --> `[`, floats(Ns), `]`.
 listed(floats, Ns) --> `[`, comma_floats(Ns), `]`.
+listed(num, Ns) --> `[`, nums(Ns), `]`.
+listed(nums, Ns) --> `[`, comma_nums(Ns), `]`.
 
 comma_string([S|Ss]) --> string(S), comma, !, comma_string(Ss).
 comma_string([S|Ss]) --> comma, !, string(S), comma_string(Ss).
@@ -179,6 +194,11 @@ comma_ints([N])  --> integer(N).
 comma_floats([N|Ns]) --> float(N), comma, !, comma_floats(Ns).
 comma_floats([N|Ns]) --> comma, !, float(N), comma_floats(Ns).
 comma_floats([N])  --> float(N).
+
+comma_nums([N|Ns]) --> number(N), comma, !, comma_nums(Ns).
+comma_nums([N|Ns]) --> comma, !, number(N), comma_nums(Ns).
+comma_nums([N])  --> number(N).
+
 
 comma --> `,`.
 
@@ -278,7 +298,13 @@ experiment_type(Ls,Ls_,punch,T):-
 experiment_type(Ls,Ls_,matrix,T):-
         selectchk(higher_order([H|Ts]),Ls,Ls_)
         ,!
-        ,V =.. [c|[H|Ts]]
+        ,findall(Id_a
+                ,(member(Id,[H|Ts])
+                 ,format(atom(Id_a), '\'~w\'', [Id])
+                 )
+                ,IDs)
+        %,V =.. [c|[H|Ts]]
+        ,V =.. [c|IDs]
         ,format(atom(T),'higher.order <- ~w',[V]).
 
 
