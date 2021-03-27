@@ -14,20 +14,30 @@ cd $experiment_module_root
 
 # Run experiments varying user-defined metarules:
 swipl -s $experiment_module -g 'run_mtg_fragment(acc,2,1,[])' -t halt &
+# Sleep two seconds to give logging the chance to create a new log file.
+# Log files are timestamped to the second.
+sleep 2
 swipl -s $experiment_module -g 'run_robots(acc,2,1,[])' -t halt &
+sleep 2
 swipl -s $experiment_module -g 'run_coloured_graph(acc,2,1,[])' -t halt &
+sleep 2
 
 # Run experiments complementing user-defined with metarules learned by matrix
 # metarule specialisation:
 swipl -s $experiment_module -g 'run_mtg_fragment(acc,2,1,[meta_monadic,meta_dyadic])' -t halt &
+sleep 2
 swipl -s $experiment_module -g 'run_robots(acc,2,1,[meta_monadic,meta_dyadic])' -t halt &
+sleep 2
 swipl -s $experiment_module -g 'run_coloured_graph(acc,2,1,[meta_monadic,meta_dyadic])' -t halt &
+sleep 2
 
 # Run experiments complementing user-defined with metarules learned by punch
 # metarule specialisation:
 swipl -s $experiment_module -g 'run_mtg_fragment(acc,2,1,[higher_order(3,3)])' -t halt &
+sleep 2
 # higher_order(2,3) makes mtg_fragment.pl take a very, Very, VERY long time.
 swipl -s $experiment_module -g 'run_robots(acc,2,1,[higher_order(2,3)])' -t halt &
+sleep 2
 swipl -s $experiment_module -g 'run_coloured_graph(acc,2,1,[higher_order(2,3)])' -t halt &
 
 # NOTE: Experiments can take a long time to run. If you only want to test that
