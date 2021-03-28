@@ -19,9 +19,9 @@ swipl -s $experiment_module -g 'run_mtg_fragment(acc,10,0.5,[])' -t halt &
 sleep 2
 swipl -s $experiment_module -g 'run_mtg_fragment(time,10,0.5,[])' -t halt &
 sleep 2
-swipl -s $experiment_module -g 'run_mtg_fragment(acc,10,0.5,[])' -t halt &
+swipl -s $experiment_module -g 'run_robots(acc,10,0.5,[])' -t halt &
 sleep 2
-swipl -s $experiment_module -g 'run_mtg_fragment(time,10,0.5,[])' -t halt &
+swipl -s $experiment_module -g 'run_robots(time,10,0.5,[])' -t halt &
 sleep 2
 swipl -s $experiment_module -g 'run_coloured_graph(acc,10,0.5,[])' -t halt &
 sleep 2
@@ -63,17 +63,17 @@ swipl -s $experiment_module -g 'run_coloured_graph(time,10,0.5,[higher_order(2,3
 # every test runs correctly and generates the expected output comment out the
 # lines running each expeiment above and uncomment the following lines.
 #
-#swipl -s $experiment_module -g 'run_coloured_graph(acc,2,1,[])' -t halt &
+#swipl -s $experiment_module -g 'run_mtg_fragment(acc,2,1,[])' -t halt &
 #sleep 2
-#swipl -s $experiment_module -g 'run_coloured_graph(time,2,1,[])' -t halt &
+#swipl -s $experiment_module -g 'run_mtg_fragment(time,2,1,[])' -t halt &
 #sleep 2
 #swipl -s $experiment_module -g 'run_robots(acc,2,1,[])' -t halt &
 #sleep 2
 #swipl -s $experiment_module -g 'run_robots(time,2,1,[])' -t halt &
 #sleep 2
-#swipl -s $experiment_module -g 'run_mtg_fragment(acc,2,1,[])' -t halt &
+#swipl -s $experiment_module -g 'run_coloured_graph(acc,2,1,[])' -t halt &
 #sleep 2
-#swipl -s $experiment_module -g 'run_mtg_fragment(time,2,1,[])' -t halt &
+#swipl -s $experiment_module -g 'run_coloured_graph(time,2,1,[])' -t halt &
 #sleep 2
 #
 #swipl -s $experiment_module -g 'run_mtg_fragment(acc,2,1,[meta_monadic,meta_dyadic])' -t halt &
