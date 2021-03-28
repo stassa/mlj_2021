@@ -128,6 +128,21 @@ meta_precon metarule 'P(x,y):- Q(z),R(u,v)'.
 meta_postcon metarule 'P(x,y):- Q(z,u),R(v)'.
 meta_projection_21 metarule 'P(x,y):- Q(z)'.
 meta_projection_12 metarule 'P(x):- Q(y,z)'.
+% 14 canonical H22 metarules
+xy_xy metarule 'P(x,y):- Q(x,y)'. % Identity
+xy_yx metarule 'P(x,y):- Q(y,x)'. % Inverse
+xy_xy_xy metarule 'P(x,y):- Q(x,y), R(x,y)'.
+xy_xy_yx metarule 'P(x,y):- Q(x,y), R(y,x)'.
+xy_xz_zy metarule 'P(x,y):- Q(x,z), R(z,y)'. % Chain
+xy_xz_yz metarule 'P(x,y):- Q(x,z), R(y,z)'. % Switch
+xy_yx_xy metarule 'P(x,y):- Q(y,x), R(x,y)'.
+xy_yx_yx metarule 'P(x,y):- Q(y,x), R(y,x)'.
+xy_yz_xz metarule 'P(x,y):- Q(y,z), R(x,z)'.
+xy_yz_zx metarule 'P(x,y):- Q(y,z), R(z,x)'.
+xy_zx_yz metarule 'P(x,y):- Q(z,x), R(y,z)'.
+xy_zx_zy metarule 'P(x,y):- Q(z,x), R(z,y)'. % Swap
+xy_zy_xz metarule 'P(x,y):- Q(z,y), R(x,z)'.
+xy_zy_zx metarule 'P(x,y):- Q(z,y), R(z,x)'.
 
 :- dynamic metarule_constraints/2.
 :- multifile metarule_constraints/2.
@@ -149,17 +164,20 @@ learning_curve_time_limit(300).
 % ================================================================================
 
 % Overrides metarules/2 in datasets/mtg_fragment/mtg_fragment.pl
-metarules([abduce
-          ,unit
-          ,identity
-          ,inverse
-          ,chain
-          ,tailrec
-          ,switch
-          ,swap
-          ,chain_abduce_x
-          ,chain_abduce_y
-          ,chain_abduce_y
+metarules([xy_xy
+          ,xy_yx
+          ,xy_xy_xy
+          ,xy_xy_yx
+          ,xy_xz_zy
+          ,xy_xz_yz
+          ,xy_yx_xy
+          ,xy_yx_yx
+          ,xy_yz_xz
+          ,xy_yz_zx
+          ,xy_zx_yz
+          ,xy_zx_zy
+          ,xy_zy_xz
+          ,xy_zy_zx
           ]).
 
 
