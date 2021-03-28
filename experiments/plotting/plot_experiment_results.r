@@ -10,7 +10,7 @@ pnt.typs <- 1:3
 systems.cols <- c('red','blue','magenta')
 
 # Plot title and labels
-title <- paste(metric,':',target)
+title <- paste('Learning target:',target)
 x.lab <- 'Sort metarules' 
 y.lab <- metric
 
@@ -48,9 +48,10 @@ matrix.ses <- matrix.sds / sqrt(results.size)
 punch.ses <- punch.sds / sqrt(results.size)
 
 # Calculate plot limits
-y.lim.max <- max(sort.means+sort.ses, matrix.means+sort.ses) 
-y.lim.min <- min(sort.means-sort.ses, matrix.means-sort.ses)
-y.lim <- c(y.lim.min, y.lim.max)
+y.lim.max <- max(sort.means+sort.ses, matrix.means+sort.ses, punch.means+punch.ses)
+y.lim.min <- min(sort.means-sort.ses, matrix.means-sort.ses, punch.means-punch.ses)
+leg.size <- legend('topleft', inset=0.02, legend=leg.text, lty=leg.lin.typs, pch=leg.pnt.typs, cex=leg.cex, lwd=leg.lwd, plot=F)
+y.lim <- c(y.lim.min, y.lim.max + leg.size$rect$h + 0.01)
 x.lim <- c(1, results.size + 0.5)
 
 p <- par()
@@ -64,7 +65,8 @@ errbar(x.axis, sort.means, yplus=sort.means+sort.ses, yminus=sort.means-sort.ses
 errbar(x.axis, matrix.means, yplus=matrix.means+matrix.ses, yminus=matrix.means-matrix.ses, col=0, pch=1, type=bar.type, errbar.col=matrix.bar.col, add=T, cap=cap, lwd=lwd)
 errbar(x.axis, punch.means, yplus=punch.means+punch.ses, yminus=punch.means-punch.ses, col=0, pch=1, type=bar.type, errbar.col=punch.bar.col, add=T, cap=cap, lwd=lwd)
 
-axis(1, at=x.axis, labels=x.axis, cex.axis=cex.axis, cex.lab=cex.lab, padj=0.5, lwd.ticks=lwd.ticks)
+axis(1, at=x.axis, labels=rev(x.axis), cex.axis=cex.axis, cex.lab=cex.lab, padj=0.5, lwd.ticks=lwd.ticks)
+
 legend('topleft', inset=0.02, legend=leg.text, lty=leg.lin.typs, pch=leg.pnt.typs, col=leg.lin.cols, cex=leg.cex, lwd=leg.lwd)
 
 par(p)
