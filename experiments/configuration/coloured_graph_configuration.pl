@@ -68,8 +68,8 @@
 generalise_learned_metarules(true).
 learned_metarules_printing(pretty).
 %metarule_learning_limits(none).
-metarule_learning_limits(coverset).
-%metarule_learning_limits(sampling(1)).
+%metarule_learning_limits(coverset).
+metarule_learning_limits(sampling(0.5)).
 %metarule_learning_limits(metasubstitutions(1)).
 reduce_learned_metarules(false).
 
