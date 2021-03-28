@@ -102,9 +102,9 @@ background_knowledge(move/2, [% Move primitives
 			     %,pick_up/2
 			     %,put_down/2
 			      % Higher-order actions - multi-moves
-			     ,double_move/3
-			     ,triple_move/3
-			     ,quadruple_move/3
+			     %,double_move/3
+			     %,triple_move/3
+			     %,quadruple_move/3
 			      % Compound actions - double moves
 			     ,move_right_twice/2
 			     ,move_left_twice/2
