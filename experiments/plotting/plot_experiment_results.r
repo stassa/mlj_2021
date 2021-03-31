@@ -50,6 +50,8 @@ punch.ses <- punch.sds / sqrt(results.size)
 # Calculate plot limits
 y.lim.max <- max(sort.means+sort.ses, matrix.means+sort.ses, punch.means+punch.ses)
 y.lim.min <- min(sort.means-sort.ses, matrix.means-sort.ses, punch.means-punch.ses)
+# Must call before getting legend size.
+plot.new()
 leg.size <- legend('topleft', inset=0.02, legend=leg.text, lty=leg.lin.typs, pch=leg.pnt.typs, cex=leg.cex, lwd=leg.lwd, plot=F)
 y.lim <- c(y.lim.min, y.lim.max + leg.size$rect$h + 0.01)
 x.lim <- c(1, results.size + 0.5)
