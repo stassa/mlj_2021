@@ -84,7 +84,7 @@ experiment_file('../datasets/coloured_graph/coloured_graph.pl',coloured_graph).
 learner(louise).
 :-dynamic learning_predicate/1.
 :-multifile learning_predicate/1.
-max_invented(1).
+max_invented(0).
 minimal_program_size(2,inf).
 recursion_depth_limit(dynamic_learning,none).
 recursive_reduction(false).
