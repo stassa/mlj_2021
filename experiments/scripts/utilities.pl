@@ -101,6 +101,7 @@ language_elements(Ts,J,K,N):-
         ,examples_targets(Pos,Hs)
         ,predicate_signature(Ts,Ps)
         ,constant_signature(Pos,Cs)
+        % Note that atoms in the Herbrand signature are ecnapsulated.
         ,meta_learning:herbrand_signature(Ts,Ss)
         ,maplist(length,[Hs,Ps,Cs,Ss],[T,P,C,A])
         ,debug(simulation,'Targets: ~w Bodies: ~w Constants: ~w Atoms: ~w',[T,P,C,A])
@@ -168,6 +169,7 @@ metarules_specialisations(I,K,Hs,Ps,Cs,Ss,Acc,Bind):-
 metarule_specialisations(K,Hs,Ps,Cs,Ss,N):-
         literals_clauses(K,Ss,Ds)
         ,clauses_instances(Ds,Hs,Ps,Cs,Ms)
+        ,debug_clauses(simulation_full,'Simulated specialisations:',Ms)
         ,length(Ms,N)
         ,debug(simulation,'Simulated ~w specialisations',[N]).
 
@@ -188,7 +190,7 @@ metarule_specialisations(K,Hs,Ps,Cs,Ss,N):-
 literals_clauses(K,Ss,Cs):-
         debug(simulation,'Generating second-order clauses...',[])
         ,findall(Ls
-               ,n_tuple(K,Ss,Ls)
+               ,n_tuple(var,K,Ss,Ls)
                ,Cs)
         ,length(Cs,N)
         ,debug(simulation,'Generated ~w clauses.',[N]).
@@ -300,14 +302,15 @@ instantiations(Es,Us,Hs,Bs,Cs,Is):-
                 ,nth1(I,Us,Us_i)
                 ,member(H,Hs)
                 ,maplist(length,[[H|Es_i],Us_i],[N,M])
-                ,maplist(n_tuple,[N,M],[Bs,Cs],[[H|Es_i],Us_i])
+                ,maplist(n_tuple(ground),[N,M],[Bs,Cs],[[H|Es_i],Us_i])
+
                 )
                ,Is_)
         ,sort(Is_, Is)
         ,debug(simulation,'Done instantiating second-order clauses',[]).
 
 
-%!	n_tuple(+N,+Xs,-Ys) is det.
+%!	n_tuple(+Inst,+N,+Xs,-Ys) is det.
 %
 %	Generate all N-tuples of elements in list Xs.
 %
@@ -315,19 +318,50 @@ instantiations(Es,Us,Hs,Bs,Cs,Is):-
 %	from the elements in a set. For a set of cardinality k, there
 %	are k^n n-tuples.
 %
-n_tuple(K, Xs, Ys):-
+%       Inst is a constant denoting the instantiation of the terms in Xs
+%       and is one of: [var,ground]. If Inst is "var", a copy of each
+%       element of Xs is made before adding it to a new n-tuple, to
+%       avoid having multiple copies of the same atom of the Herbrand
+%       signature in each tuple. If Inst is "ground" no copy is made.
+%
+%       Suppose the Herbrand signature (passed as Xs) is a single atom:
+%       [m(P,X,Y)]. Unless we make a fresh copy of this atom each time
+%       we generate a tuple of atoms to represent a clause, we'd only
+%       ever get tautologies of varying size:
+%       ==
+%       [m(P,X,Y),m(P,X,Y)]
+%       [m(P,X,Y),m(P,X,Y),m(P,X,Y)]
+%       [m(P,X,Y),m(P,X,Y),m(P,X,Y),m(P,X,Y)]
+%       ...
+%       ==
+%
+%       Copying makes for literals with fresh variables so we instead
+%       generate clauses with literals with distinct variables (and no
+%       tautologies):
+%       ==
+%       [m(P,X,Y),m(Q,Z,U)]
+%       [m(P,X,Y),m(Q,Z,U),m(R,V,W)]
+%       [m(P,X,Y),m(Q,Z,U),m(R,V,W),m(S,G,H)]
+%       ...
+%       ==
+%
+n_tuple(I,K, Xs, Ys):-
 	length(Ys,K)
-	,n_tuple(Xs,Ys).
+	,n_tuple(I,Xs,Ys).
 
-%!	n_tuple(+Xs,-Ys) is det.
+%!	n_tuple(+Inst,+Xs,-Ys) is det.
 %
 %	Business end of n_tuple/3.
 %
-n_tuple(_,[]):-
+n_tuple(_,_,[]):-
 	!.
-n_tuple(Xs,[X|Ys]):-
+n_tuple(var,Xs,[X_|Ys]):-
 	member(X,Xs)
-	,n_tuple(Xs,Ys).
+        ,copy_term(X,X_)
+	,n_tuple(var,Xs,Ys).
+n_tuple(ground,Xs,[X|Ys]):-
+	member(X,Xs)
+	,n_tuple(ground,Xs,Ys).
 
 
 %!      constant_signature(+Examples,-Constants) is det.
@@ -372,7 +406,7 @@ constant_signature(Es,Cs):-
 metarule_language_cardinality([K,T,A,E,U,C,P], L):-
         findall(Li
                ,(between(1,K,I)
-                ,Li is T * A^I * E^E * U^U * C^(E+U) * P^I
+                ,Li is T * A^I * E^E * U^U * C^(E+U) * P^(I-1)
                 )
                ,Ls)
         ,sumlist(Ls,L).
