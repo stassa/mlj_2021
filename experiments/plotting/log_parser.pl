@@ -12,6 +12,10 @@
 r_plotting_script('plot_experiment_results.r').
 
 
+%!      copy_r_plotting_script(+Input_Dir,-Output_Dir) is det.
+%
+%       Copy the R plotting script to the Output directory.
+%
 copy_r_plotting_script(In_Dir,Out_Dir):-
         r_plotting_script(Fn)
         ,directory_file_path(In_Dir,Fn,P)
@@ -134,6 +138,8 @@ log_info(higher_order(Min,Max)) --> higher_order(punch,[Min,Max]).
 log_info(higher_order(Hs)) --> higher_order(matrix,Cs), { atoms_codes(Hs, Cs) } .
 log_info(means(Ms)) --> means(Ms).
 log_info(sds(Ms)) --> sds(Ms).
+log_info(pos(N)) --> positive_examples(N).
+log_info(neg(N)) --> negative_examples(N).
 
 target(T) --> info_line(`Target:`), predicate_symbol(T).
 metric(M) --> info_line(`Metric:`), string(M).
@@ -154,7 +160,8 @@ higher_order(matrix,Hs) -->
         ,listed(term,Hs).
 means(Ms) --> info_line(`Mean`), string(_M), `:`, blanks, listed(nums,Ms).
 sds(Ms) --> info_line(`Standard deviations:`), blanks, listed(nums,Ms).
-
+positive_examples(N) --> info_line(`Positive examples:`), blanks, integers(N).
+negative_examples(N) --> info_line(`Negative examples:`), blanks, integers(N).
 
 info_line(S) --> start_of_line, string(S), blanks.
 
@@ -231,15 +238,17 @@ numbers_codes(Ns, Cs):-
 %       Convert parsed log Lines to R data for plotting.
 %
 parsed_lines_to_r_vectors(Ls,Vs):-
-        r_string(target,Ls,Ls_1,T_v)
-        ,r_string(metric,Ls_1,Ls_2,M_v)
-        ,r_num(steps,Ls_2,Ls_3,S_v)
-        ,r_num(samples,Ls_3,Ls_4,Ss_v)
-        ,r_num(time_limit,Ls_4,Ls_5,L_v)
-        ,experiment_type(Ls_5,Ls_6,T,Et_v)
-        ,r_vector(means,Ls_6,T,Ls_7,Ms_v)
-        ,r_vector(sds,Ls_7,T,_Ls_8,Sds_v)
-        ,flatten([T_v,M_v,S_v,Ss_v,L_v,Ms_v,Sds_v,Et_v],Vs).
+        r_string(target,Ls,_,T_v)
+        ,r_num(pos,Ls,_,Pos_v)
+        ,r_num(neg,Ls,_,Neg_v)
+        ,r_string(metric,Ls,_,M_v)
+        ,r_num(steps,Ls,_,S_v)
+        ,r_num(samples,Ls,_,Ss_v)
+        ,r_num(time_limit,Ls,_,L_v)
+        ,experiment_type(Ls,_,T,Et_v)
+        ,r_vector(means,Ls,T,_,Ms_v)
+        ,r_vector(sds,Ls,T,_,Sds_v)
+        ,flatten([T_v,Pos_v,Neg_v,M_v,S_v,Ss_v,L_v,Ms_v,Sds_v,Et_v],Vs).
 
 
 %!      r_string(+Datum,+Parsed,-Rest,-String) is det.
