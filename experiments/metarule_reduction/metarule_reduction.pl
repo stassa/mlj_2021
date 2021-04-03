@@ -43,12 +43,18 @@ metarule_subset_evaluations(T,L,[Pos,Neg,BK,MS],Hs,M,S,Vs):-
         ,debug(progress,'Random permutation of MS: ~w',[MS])
         ,metarule_subset_evaluations(T,L,[Pos,Neg,BK,MS_],Hs,M,S,[],Vs).
 
-metarule_subset_evaluations(_T,_L,[_Pos,_Neg,_BK,[]],_Hs,_M,_S,Acc,Vs):-
-        reverse(Acc,Vs)
-        ,!.
-metarule_subset_evaluations(T,L,[Pos,Neg,BK,MS],Hs,M,S,Acc,Bind):-
+metarule_subset_evaluations(T,L,[Pos,Neg,BK,[]],Hs,M,S,Acc,Vs):-
         !
-        ,debug(progress,'User-defined metarules: ~w',[MS])
+        ,metarule_subset_evaluation(T,L,[Pos,Neg,BK,[]],Hs,M,S,N,V)
+        ,reverse([N-V|Acc],Vs).
+metarule_subset_evaluations(T,L,[Pos,Neg,BK,MS],Hs,M,S,Acc,Bind):-
+        metarule_subset_evaluation(T,L,[Pos,Neg,BK,MS],Hs,M,S,N,V)
+        ,selectchk(_,MS,MS_)
+        ,metarule_subset_evaluations(T,L,[Pos,Neg,BK,MS_],Hs,M,S,[N-V|Acc],Bind).
+
+
+metarule_subset_evaluation(T,L,[Pos,Neg,BK,MS],Hs,M,S,N,V):-
+        debug(progress,'User-defined metarules: ~w',[MS])
         ,learn_meta_reduction(T,L,[Pos,Neg,BK,MS],Hs,M,S,Ps,V)
         ,debug(progress,'Measured ~w: ~w',[M,V])
         ,debug(metarule_reduction_full,'Measured ~w: ~w sec',[M,V])
@@ -56,9 +62,7 @@ metarule_subset_evaluations(T,L,[Pos,Neg,BK,MS],Hs,M,S,Acc,Bind):-
         ,length(Ps, Len)
         ,debug(progress,'Hypothesis size: ~w',[Len])
         ,debug(metarule_reduction_full,'Hypothesis size: ~w',[Len])
-        ,length(MS, N)
-        ,selectchk(_,MS,MS_)
-        ,metarule_subset_evaluations(T,L,[Pos,Neg,BK,MS_],Hs,M,S,[N-V|Acc],Bind).
+        ,length(MS, N).
 
 
 learn_meta_reduction(_T,L,[Pos,Neg,BK,MS],[],time,S,Ps,D):-
