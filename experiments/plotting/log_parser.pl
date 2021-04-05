@@ -1,4 +1,5 @@
-:-module(log_parser, [copy_r_plotting_script/2
+:-module(log_parser, [write_r_scripts/1
+                     ,copy_r_plotting_script/2
                      ,write_r_data/2
                      ,parse_logs_to_r_vectors/2
                      ]).
@@ -12,6 +13,18 @@
 r_plotting_script('plot_experiment_results.r').
 
 
+%!      write_r_scripts(+Directory) is det.
+%
+%       Write R plotting scrips to a Directory.
+%
+write_r_scripts(Dir):-
+        module_property(log_parser, file(M))
+        ,file_directory_name(M,Dir_2)
+        ,write_r_data(Dir,Dir)
+        ,copy_r_plotting_script(Dir_2,Dir).
+
+
+
 %!      copy_r_plotting_script(+Input_Dir,-Output_Dir) is det.
 %
 %       Copy the R plotting script to the Output directory.
@@ -20,6 +33,7 @@ copy_r_plotting_script(In_Dir,Out_Dir):-
         r_plotting_script(Fn)
         ,directory_file_path(In_Dir,Fn,P)
         ,copy_file(P,Out_Dir).
+
 
 
 %!      write_r_data(+Directory) is det.
