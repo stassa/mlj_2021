@@ -167,26 +167,27 @@ debug_timestamp(A):-
 	,format_time(atom(A), '%d_%m_%y_%H_%M_%S', DT).
 
 
-%!	start_logging(+Target) is det.
+%!	start_logging(+Name_Elements) is det.
 %
 %	Start logging to a new log file.
 %
-start_logging(F/A):-
-% initialize should work but causes run_learning_curve.pl to raise
-% errors on the existence of the two directories. So we call the two
-% initialisation goals again here.
-	%initialize
+%	Name_Elements is a list of Prolog atoms used to form the log
+%	file's name. Each atom in Name_Elements is joined with an
+%	underscore '_' into an atom, and a timestamp appended.
+%
+start_logging(Ls):-
 	init_log_dir
 	,init_plot_dir
-	,configuration:learner(L)
 	,configuration:logging_directory(D)
 	,close_log(learning_curve)
 	,debug_timestamp(T)
-	,atomic_list_concat([L,learning_curve,F,A,T],'_',Bn)
+	,append(Ls,[T],Ls_)
+	,atomic_list_concat(Ls_,'_',Bn)
 	,file_name_extension(Bn,'.log',Fn)
 	,directory_file_path(D,Fn,P)
 	,open(P,write,S,[alias(learning_curve)])
 	,debug(learning_curve>S).
+
 
 
 %!	close_log(+Alias) is det.
@@ -264,8 +265,15 @@ log_experiment_results(M,Ms,SDs):-
 %	deviations of the reasults averaged in Means.
 %
 learning_curve(T,M,K,Ss,Ms,SDs):-
-	start_logging(T)
-	,configuration:learning_curve_time_limit(L)
+% Opening of the log file is now done in metarule_reduction.pl
+% Note that if learning_curve/6 is run on its own, no logging output
+% will be generated unless start_logging/1 is called as below. On the
+% other hand, if start_logging/1 is passed a different list of log name
+% elements here and in metarule_reduction.pl, there will be two log
+% files. Maximum chaos!
+%
+	%start_logging([T])
+	configuration:learning_curve_time_limit(L)
 	,log_experiment_setup(T,L,M,K,Ss)
 	,experiment_data(T,Pos,Neg,BK,MS)
 	,learning_curve(T,L,[Pos,Neg,BK,MS],M,K,Ss,Rs)

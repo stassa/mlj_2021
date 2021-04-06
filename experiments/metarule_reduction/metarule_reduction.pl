@@ -10,7 +10,9 @@
 
 
 metarule_variation(T,M,K,S,Hs,Ms,SDs):-
-        learning_curve:start_logging(T)
+        targets_symbols(T,Ss)
+        ,append([M],Ss,Ls)
+        ,learning_curve:start_logging(Ls)
         % Overrides metarules defined in experiment file
         ,configuration:metarules(MS)
         ,configuration:learning_curve_time_limit(L)
@@ -23,6 +25,14 @@ metarule_variation(T,M,K,S,Hs,Ms,SDs):-
         ,learning_curve:log_experiment_results(M,Ms,SDs)
         ,learning_curve:print_r_vectors(T,M,[S],Ms,SDs)
         ,learning_curve:close_log(learning_curve).
+
+targets_symbols(F/A,[F,A]):-
+        !.
+targets_symbols(Ts,Ss):-
+        findall([F,A]
+               ,member(F/A, Ts)
+               ,Ts_)
+        ,flatten(Ts_,Ss).
 
 
 metarule_variations(T,L,Ts,Hs,M,K,S,Rs):-
