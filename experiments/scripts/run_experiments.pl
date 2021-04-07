@@ -1,6 +1,6 @@
 :-module(run_experiments, [run_mtg_fragment/4
                           ,run_robots/4
-                          ,run_coloured_graph/4
+                          ,run_coloured_graph/5
                           ]).
 
 /** <module> Run metarule learning experiments.
@@ -79,6 +79,10 @@ herewith in the Swi-Prolog command line, e.g.:
 ?- run_coloured_graph(acc,2,1,[]).
 ==
 
+Note that if you want to test with different mislabelling types of the
+coloured graph dataset you must start a new Prolog session, else the
+right file is not loaded.
+
 */
 
 :-['../../louise/load_headless'].
@@ -150,25 +154,40 @@ run_robots(M,K,S,Hs):-
         ,debug(progress,'~w: Finished with robots dataset',[L]).
 
 
-%!      run_coloured_graph(+Metric,+Steps,+Samples,+Higher_Order) is det.
+%!      run_coloured_graph(+Type,+Metric,+Steps,+Samples,+Higher_Order)
+%!      is det.
 %
 %       Run a learning rate experiment on the coloured_graph.pl dataset.
 %
-%       Note that the MIL problem in coloured_graph.pl is described as "grid
-%       world navigation" in the paper.
+%       Type is the type of mislabelling to apply, one of [no_noise,
+%       false_positives, false_negatives, ambiguities]
 %
-run_coloured_graph(M,K,S,Hs):-
+run_coloured_graph(N,M,K,S,Hs):-
         configuration:learner(L)
         % Path relative to this file.
-        ,load_config('../configuration/coloured_graph_configuration.pl')
+        ,coloured_graph_config(N,P)
+        %,load_config('../configuration/coloured_graph_configuration.pl')
+        ,load_config(P)
         % Must be loaded after loading experiment configuration
         % to avoid redefinition permission errors in learning_curve.pl
         ,use_module('../metarule_reduction/metarule_reduction.pl')
         %,graph_generator:write_dataset
         ,coloured_graph_target(T)
-        ,debug(progress,'~w: Starting on coloured_graph dataset',[L])
+        ,debug(progress,'~w: Starting on coloured_graph (~w) dataset',[L,T])
         ,metarule_reduction:metarule_variation(T,M,K,S,Hs,_Ms,_SDs)
-        ,debug(progress,'~w: Finished with coloured_graph dataset',[L]).
+        ,debug(progress,'~w: Finished with coloured_graph dataset (~w)',[L,T]).
+
+
+%!      coloured_graph_config(?Mislabellings, ?Configuration)
+%!      is semidet.
+%
+%       Configuration files for coloured_graph.pl by Mislabelling type.
+%
+coloured_graph_config(no_noise, '../configuration/coloured_graph_configuration.pl').
+coloured_graph_config(false_positives, '../configuration/false_positives_configuration.pl').
+coloured_graph_config(false_negatives, '../configuration/false_negatives_configuration.pl').
+coloured_graph_config(ambiguities, '../configuration/ambiguities_configuration.pl').
+
 
 
 %!      coloured_graph_target(-Target) is det.

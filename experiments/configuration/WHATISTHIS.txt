@@ -21,3 +21,15 @@ Configuration files for the various metarule reduction experiments.
   > Configuration file to go with datasets/coloured_graph/coloured_graph.pl
     experiment file. Overrides configuration options and metarules set in that
     experiment file and the main Louise configuration.
+
+- false_positives_configuration.pl
+  > Configuration file for datasets/coloured_graph/coloured_graph.pl for the
+    false-positives sub-dataset. Overrides configuration options and metarules
+    set in that experiment file and the main Louise configuration.
+
+- false_negatives_configuration.pl
+  > As false_positives_configuration.pl but for the false-negatives
+    sub-dataset.
+
+- ambiguities_configuration.pl
+  > As false_positives_configuration.pl but for the ambiguities sub-dataset.

@@ -23,9 +23,21 @@ swipl -s $experiment_module -g 'run_robots(acc,10,0.5,[])' -t halt &
 sleep 2
 swipl -s $experiment_module -g 'run_robots(time,10,0.5,[])' -t halt &
 sleep 2
-swipl -s $experiment_module -g 'run_coloured_graph(acc,10,0.5,[])' -t halt &
+swipl -s $experiment_module -g 'run_coloured_graph(no_noise,acc,10,0.5,[])' -t halt &
 sleep 2
-swipl -s $experiment_module -g 'run_coloured_graph(time,10,0.5,[])' -t halt &
+swipl -s $experiment_module -g 'run_coloured_graph(no_noise,time,10,0.5,[])' -t halt &
+sleep 2
+swipl -s $experiment_module -g 'run_coloured_graph(false_positives,acc,10,0.5,[])' -t halt &
+sleep 2
+swipl -s $experiment_module -g 'run_coloured_graph(false_positives,time,10,0.5,[])' -t halt &
+sleep 2
+swipl -s $experiment_module -g 'run_coloured_graph(false_negatives,acc,10,0.5,[])' -t halt &
+sleep 2
+swipl -s $experiment_module -g 'run_coloured_graph(false_negatives,time,10,0.5,[])' -t halt &
+sleep 2
+swipl -s $experiment_module -g 'run_coloured_graph(ambiguities,acc,10,0.5,[])' -t halt &
+sleep 2
+swipl -s $experiment_module -g 'run_coloured_graph(ambiguities,time,10,0.5,[])' -t halt &
 sleep 2
 
 # Run experiments complementing user-defined with metarules learned by matrix
@@ -38,9 +50,21 @@ swipl -s $experiment_module -g 'run_robots(acc,10,0.5,[meta_monadic,meta_dyadic]
 sleep 2
 swipl -s $experiment_module -g 'run_robots(time,10,0.5,[meta_monadic,meta_dyadic])' -t halt &
 sleep 2
-swipl -s $experiment_module -g 'run_coloured_graph(acc,10,0.5,[meta_monadic,meta_dyadic])' -t halt &
+swipl -s $experiment_module -g 'run_coloured_graph(no_noise,acc,10,0.5,[meta_monadic,meta_dyadic])' -t halt &
 sleep 2
-swipl -s $experiment_module -g 'run_coloured_graph(time,10,0.5,[meta_monadic,meta_dyadic])' -t halt &
+swipl -s $experiment_module -g 'run_coloured_graph(no_noise,time,10,0.5,[meta_monadic,meta_dyadic])' -t halt &
+sleep 2
+swipl -s $experiment_module -g 'run_coloured_graph(false_positives,acc,10,0.5,[meta_monadic,meta_dyadic])' -t halt &
+sleep 2
+swipl -s $experiment_module -g 'run_coloured_graph(false_positives,time,10,0.5,[meta_monadic,meta_dyadic])' -t halt &
+sleep 2
+swipl -s $experiment_module -g 'run_coloured_graph(false_negatives,acc,10,0.5,[meta_monadic,meta_dyadic])' -t halt &
+sleep 2
+swipl -s $experiment_module -g 'run_coloured_graph(false_negatives,time,10,0.5,[meta_monadic,meta_dyadic])' -t halt &
+sleep 2
+swipl -s $experiment_module -g 'run_coloured_graph(ambiguities,acc,10,0.5,[meta_monadic,meta_dyadic])' -t halt &
+sleep 2
+swipl -s $experiment_module -g 'run_coloured_graph(ambiguities,time,10,0.5,[meta_monadic,meta_dyadic])' -t halt &
 sleep 2
 
 # Run experiments complementing user-defined with metarules learned by punch
@@ -55,9 +79,21 @@ swipl -s $experiment_module -g 'run_robots(acc,10,0.5,[higher_order(2,3)])' -t h
 sleep 2
 swipl -s $experiment_module -g 'run_robots(time,10,0.5,[higher_order(2,3)])' -t halt &
 sleep 2
-swipl -s $experiment_module -g 'run_coloured_graph(acc,10,0.5,[higher_order(2,3)])' -t halt &
+swipl -s $experiment_module -g 'run_coloured_graph(no_noise,acc,10,0.5,[higher_order(2,3)])' -t halt &
 sleep 2
-swipl -s $experiment_module -g 'run_coloured_graph(time,10,0.5,[higher_order(2,3)])' -t halt &
+swipl -s $experiment_module -g 'run_coloured_graph(no_noise,time,10,0.5,[higher_order(2,3)])' -t halt &
+sleep 2
+swipl -s $experiment_module -g 'run_coloured_graph(false_positives,acc,10,0.5,[higher_order(2,3)])' -t halt &
+sleep 2
+swipl -s $experiment_module -g 'run_coloured_graph(false_positives,time,10,0.5,[higher_order(2,3)])' -t halt &
+sleep 2
+swipl -s $experiment_module -g 'run_coloured_graph(false_negatives,acc,10,0.5,[higher_order(2,3)])' -t halt &
+sleep 2
+swipl -s $experiment_module -g 'run_coloured_graph(false_negatives,time,10,0.5,[higher_order(2,3)])' -t halt &
+sleep 2
+swipl -s $experiment_module -g 'run_coloured_graph(ambiguities,acc,10,0.5,[higher_order(2,3)])' -t halt &
+sleep 2
+swipl -s $experiment_module -g 'run_coloured_graph(ambiguities,time,10,0.5,[higher_order(2,3)])' -t halt &
 
 # NOTE: Experiments can take a long time to run. If you only want to test that
 # every test runs correctly and generates the expected output comment out the
@@ -71,9 +107,9 @@ swipl -s $experiment_module -g 'run_coloured_graph(time,10,0.5,[higher_order(2,3
 #sleep 2
 #swipl -s $experiment_module -g 'run_robots(time,2,1,[])' -t halt &
 #sleep 2
-#swipl -s $experiment_module -g 'run_coloured_graph(acc,2,1,[])' -t halt &
+#swipl -s $experiment_module -g 'run_coloured_graph(no_noise,acc,2,1,[])' -t halt &
 #sleep 2
-#swipl -s $experiment_module -g 'run_coloured_graph(time,2,1,[])' -t halt &
+#swipl -s $experiment_module -g 'run_coloured_graph(no_noise,time,2,1,[])' -t halt &
 #sleep 2
 #
 #swipl -s $experiment_module -g 'run_mtg_fragment(acc,2,1,[meta_monadic,meta_dyadic])' -t halt &
@@ -84,9 +120,9 @@ swipl -s $experiment_module -g 'run_coloured_graph(time,10,0.5,[higher_order(2,3
 #sleep 2
 #swipl -s $experiment_module -g 'run_robots(time,2,1,[meta_monadic,meta_dyadic])' -t halt &
 #sleep 2
-#swipl -s $experiment_module -g 'run_coloured_graph(acc,2,1,[meta_monadic,meta_dyadic])' -t halt &
+#swipl -s $experiment_module -g 'run_coloured_graph(no_noise,acc,2,1,[meta_monadic,meta_dyadic])' -t halt &
 #sleep 2
-#swipl -s $experiment_module -g 'run_coloured_graph(time,2,1,[meta_monadic,meta_dyadic])' -t halt &
+#swipl -s $experiment_module -g 'run_coloured_graph(no_noise,time,2,1,[meta_monadic,meta_dyadic])' -t halt &
 #sleep 2
 #
 #swipl -s $experiment_module -g 'run_mtg_fragment(acc,2,1,[higher_order(2,3)])' -t halt &
@@ -97,9 +133,9 @@ swipl -s $experiment_module -g 'run_coloured_graph(time,10,0.5,[higher_order(2,3
 #sleep 2
 #swipl -s $experiment_module -g 'run_robots(time,2,1,[higher_order(2,3)])' -t halt &
 #sleep 2
-#swipl -s $experiment_module -g 'run_coloured_graph(acc,2,1,[higher_order(2,3)])' -t halt &
+#swipl -s $experiment_module -g 'run_coloured_graph(no_noise,acc,2,1,[higher_order(2,3)])' -t halt &
 #sleep 2
-#swipl -s $experiment_module -g 'run_coloured_graph(time,2,1,[higher_order(2,3)])' -t halt &
+#swipl -s $experiment_module -g 'run_coloured_graph(no_noise,time,2,1,[higher_order(2,3)])' -t halt &
 
 # Return to project root
 cd ../..
